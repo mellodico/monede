@@ -1,0 +1,195 @@
+{% extends 'financas/base.html' %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'financas/css/meus_cartoes.css' %}">
+<script src="{% static 'js/meus_cartoes.js' %}"></script>
+{% endblock %}
+
+{% block title %}Meus Cartões{% endblock %}
+
+{% block content %}<div class="container">
+    <div class="dashboard-container">
+        <div class="content-wrapper">
+            <h1 class="section-title">Carteira</h1>
+            <!-- Credit Cards Section -->
+            <section class="cards-section">
+                <div class="section-header">
+                    <h2 class="section-subtitle">Meus cartões</h2>
+                    <button class="add-button" onclick="abrirModalCartao()">
+                        <span class="add-icon">+</span>
+                        <span>Adicionar Cartões</span>
+                    </button>
+                </div>
+                
+                <div class="cards-grid">
+                    {% for cartao in cartoes %}
+                    <div class="credit-card">
+                        <div class="card-header">
+                            {% if cartao.tipo_cartao == 'MASTER' %}
+                            <div class="card-logo">
+                                <div class="mastercard-circles">
+                                    <div class="circle circle-red"></div>
+                                    <div class="circle circle-orange"></div>
+                                </div>
+                            </div>
+                            {% endif %}
+                            <div class="card-info">
+                                <h2 class="card-name">{{ cartao.nome_cartao }}</h2>
+                                <p class="card-date">fecha em {{ cartao.data_fechamento|date:"d/m" }}</p>
+                            </div>
+                        </div>
+                        <div class="card-amount">
+                            <div class="amount-info">
+                                <h3 class="amount-value">R$ {{ cartao.valor_fatura|floatformat:2 }}</h3>
+                                <div class="amount-status">
+                                    <span class="status-dot"></span>
+                                    <span>{{ cartao.get_status_display }}</span>
+                                </div>
+                            </div>
+                            <button class="view-transactions">Ver Transações</button>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </section>
+    
+            <!-- Bank Accounts Section -->
+            <section class="accounts-section">
+                <div class="section-header">
+                    <h2 class="section-subtitle">Minhas contas</h2>
+                    <button class="add-button" onclick="abrirModalConta()">
+                        <span class="add-icon">+</span>
+                        <span>Adicionar Contas</span>
+                    </button>
+                </div>
+                
+                <div class="cards-grid">
+                    {% for conta in contas %}
+                    <div class="bank-account">
+                        <div class="bank-header">
+                            <div class="bank-logo">
+                                {% if conta.banco.logo %}
+                                <img src="{{ conta.banco.logo.url }}" alt="{{ conta.banco.nome }}">
+                                {% endif %}
+                            </div>
+                            <div class="bank-info">
+                                <h3 class="bank-name">{{ conta.nome }}</h3>
+                                <p class="bank-balance">{{ conta.banco.nome }}</p>
+                                <p class="bank-amount">R$ {{ conta.saldo|floatformat:2 }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </section>
+        </div>
+    </div>
+    
+   
+<!-- Credit Card Modal -->
+<div id="modalCartao" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2>Novo Cartão</h2>
+            <button class="close-button" onclick="closeModal('modalCartao')">&times;</button>
+        </div>
+        <form method="POST" action="{% url 'adicionar_cartao' %}">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="banco">Banco*</label>
+                <select id="banco" name="banco" class="form-input" required>
+                    {% for banco in bancos %}
+                    <option value="{{ banco.id }}">{{ banco.nome }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="nome_cartao">Nome do Cartão*</label>
+                <input type="text" id="nome_cartao" name="nome_cartao" class="form-input" required>
+            </div>
+            <div class="form-group">
+                <label for="limite_total">Limite Total*</label>
+                <div class="input-valor">
+                    <span class="prefixo-valor">R$</span>
+                    <input type="number" id="limite_total" name="limite_total" 
+                           step="0.01" required class="input-padrao"
+                           placeholder="0,00">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="fecha_fatura">Fecha Fatura Dia*</label>
+                <select id="fecha_fatura" name="data_fechamento" class="form-input" required>
+                    {% for dia in dias %}
+                    <option value="{{ dia }}">{{ dia }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="vence_fatura">Vence Dia*</label>
+                <select id="vence_fatura" name="data_vencimento" class="form-input" required>
+                    {% for dia in dias %}
+                    <option value="{{ dia }}">{{ dia }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="modal-actions">
+                <button type="button" class="cancel-button" onclick="closeModal('modalCartao')">Cancelar</button>
+                <button type="submit" class="confirm-button">Confirmar</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+    
+ <!--  Account Modal -->
+<div id="modalConta" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2>Nova Conta</h2>
+            <button class="close-button" onclick="closeModal('modalConta')">&times;</button>
+        </div>
+        <form method="POST" action="{% url 'adicionar_conta' %}">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="titulo">Título da Conta*</label>
+                <input type="text" id="titulo" name="titulo" class="form-input" required>
+            </div>
+            <div class="form-group">
+                <label for="banco">Banco*</label>
+                <select id="banco" name="banco" class="form-input" required>
+                    {% for banco in bancos %}
+                    <option value="{{ banco.id }}">{{ banco.nome }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="saldo">Saldo Inicial*</label>
+                <div class="input-valor">
+                    <span class="prefixo-valor">R$</span>
+                    <input type="number" id="saldo" name="saldo" 
+                           step="0.01" required class="input-padrao"
+                           placeholder="0,00">
+                </div>
+            </div>
+            <div class="modal-actions">
+                <button type="button" class="cancel-button" onclick="closeModal('modalConta')">Cancelar</button>
+                <button type="submit" class="confirm-button">Criar Conta</button>
+            </div>
+        </form>
+    </div>
+
+            {% if messages %}
+                <div class="messages">
+                    {% for message in messages %}
+                        <div class="alert {{ message.tags }}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+
+</div>
+
+{% endblock %}

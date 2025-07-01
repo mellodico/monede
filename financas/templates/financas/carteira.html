@@ -1,0 +1,74 @@
+{% extends 'financas/base.html' %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'financas/css/carteira.css' %}">
+<script src="{% static 'js/carteira.js' %}"></script>
+{% endblock %}
+
+{% block title %}Minhas Contas{% endblock %}
+
+{% block content %}
+<div class="painel-contas">
+    <div class="container-contas">
+        <div class="cabecalho">
+            <h1 class="titulo-pagina">Minhas Contas</h1>
+            <button class="botao-adicionar-conta" id="novoCartaoButton" data-bs-toggle="modal" data-bs-target="#novoCartaoModal">
+                <span class="icone-adicionar">+</span>
+                Adicionar Nova Conta
+            </button>
+        </div>
+        
+        <div class="grade-contas">
+            {% for conta in contas %}
+            <div class="cartao-conta">
+                <div class="conteudo-cartao">
+                    <h3 class="titulo-conta">{{ conta.nome }}</h3>
+                    <p class="banco-conta">Banco: {{ conta.banco.nome }}</p>
+                    <p class="saldo-conta">Saldo Atual: R$ {{ conta.saldo|floatformat:2 }}</p>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="novoCartaoModal" tabindex="-1" aria-labelledby="novoCartaoModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="novoCartaoModalLabel">Novo Cartão</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form method="post" action="{% url 'meus_cartoes' %}">
+            {% csrf_token %}
+            <div class="mb-3">
+              <label for="id_nome" class="form-label">Nome do Cartão*</label>
+              <input type="text" class="form-control" id="id_nome" name="nome" required>
+            </div>
+            <div class="mb-3">
+              <label for="id_bandeira" class="form-label">Bandeira*</label>
+              <select class="form-control" id="id_bandeira" name="bandeira" required>
+                {% for bandeira in bandeiras %}
+                <option value="{{ bandeira.id }}">{{ bandeira.nome }}</option>
+                {% endfor %}
+              </select>
+            </div>
+            <div class="mb-3">
+              <label for="id_data_fechamento" class="form-label">Data de Fechamento*</label>
+              <input type="date" class="form-control" id="id_data_fechamento" name="data_fechamento" required>
+            </div>
+            <div class="mb-3">
+              <label for="id_data_vencimento" class="form-label">Data de Vencimento*</label>
+              <input type="date" class="form-control" id="id_data_vencimento" name="data_vencimento" required>
+            </div>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+            <button type="submit" class="btn btn-primary" name="adicionar_cartao">Confirmar</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

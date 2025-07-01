@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+
+{% block conteudo %}
+<div class="transacoes-header">
+    <div class="transacoes-titulo">
+        <h1>Transações - {{ cartao.nome_cartao }}</h1>
+        <button class="btn-adicionar" onclick="abrirModalTransacao()">
+            Nova Transação
+        </button>
+    </div>
+    
+    <div class="filtros">
+        <input type="date" id="dataInicial" class="filtro-data">
+        <input type="date" id="dataFinal" class="filtro-data">
+        <button onclick="filtrarTransacoes()" class="btn-filtrar">Filtrar</button>
+    </div>
+</div>
+
+<div class="transacoes-lista">
+    <table>
+        <thead>
+            <tr>
+                <th>Data</th>
+                <th>Descrição</th>
+                <th>Valor</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for transacao in transacoes %}
+            <tr>
+                <td>{{ transacao.data|date:"d/m/Y" }}</td>
+                <td>{{ transacao.descricao }}</td>
+                <td class="valor">R$ {{ transacao.valor|floatformat:2 }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<!-- Modal Nova Transação -->
+<div id="modalTransacao" class="modal">
+    <div class="modal-conteudo">
+        <h2>Nova Transação</h2>
+        <form method="post" action="{% url 'adicionar_transacao' cartao.id %}">
+            {% csrf_token %}
+            <div class="form-grupo">
+                <label for="{{ form.descricao.id_for_label }}">Descrição</label>
+                {{ form.descricao }}
+            </div>
+            <div class="form-grupo">
+                <label for="{{ form.valor.id_for_label }}">Valor</label>
+                {{ form.valor }}
+            </div>
+            <div class="form-grupo">
+                <label for="{{ form.data.id_for_label }}">Data</label>
+                {{ form.data }}
+            </div>
+            <div class="modal-acoes">
+                <button type="button" class="btn-cancelar" onclick="fecharModalTransacao()">Cancelar</button>
+                <button type="submit" class="btn-confirmar">Confirmar</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

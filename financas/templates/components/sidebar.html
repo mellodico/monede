@@ -1,0 +1,34 @@
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'financas/css/sidebar.css' %}">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">
+{% endblock %}
+
+<div class="sidebar">
+  <div class="logo">
+    <img src="{% static 'images/logo2.svg' %}" alt="Logo" class="logo-img" />
+  </div>
+  <div class="nav-links">
+    <a href="{% url 'inicio' %}" class="nav-item">
+        <img src="{% static 'icons/menu-inicio.svg' %}" alt="Início" class="nav-icon"> Início
+    </a>
+    <a href="{% url 'transacoes' %}" class="nav-item">
+        <img src="{% static 'icons/menu-transa.svg' %}" alt="Transações" class="nav-icon"> Transações
+    </a>
+    
+    <a href="{% url 'pagamentos' %}" class="nav-item">
+        <img src="{% static 'icons/menu-pagamentos.svg' %}" alt="Pagamentos" class="nav-icon"> Pagamentos
+    </a>
+    <a href="{% url 'metas' %}" class="nav-item">
+        <img src="{% static 'icons/menu-metas.svg' %}" alt="Metas" class="nav-icon"> Metas
+    </a>
+    <a href="{% url 'relatorios' %}" class="nav-item">
+        <img src="{% static 'icons/menu-rela.svg' %}" alt="Relatórios" class="nav-icon"> Relatórios
+    </a>
+</div>
+
+    
+  </div>
+</div>
+

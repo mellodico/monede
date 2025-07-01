@@ -1,0 +1,354 @@
+.container {
+    max-width: 1150px;
+    margin: auto;
+    padding: 40px 10px;
+    
+}
+
+/* Header Styles */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.titulo-pagina {
+    font-size: 30px;
+    color: black;
+}
+
+.btn-adicionar {
+    padding: 7px 10px;
+    background: #3F9DAC;
+    color: #D0EAEE;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    border: none;
+    cursor: pointer;
+}
+
+
+/* Seção de Pagamentos */
+
+
+.titulo-secao {
+    font-size: 20px;
+    color: #434343;
+    margin-bottom: 10px;
+}
+
+.lista-pagamentos {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.lista-pagamentos-atrasado{
+    display: flex;
+    flex-direction: column;
+    
+}
+
+.lista-pagamentos-hoje{
+    display: flex;
+    flex-direction: column;
+    
+}
+
+.card-pagamento {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #FFF;
+    border: 1px solid #BEBEBE;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+.data-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: #F2F2F2;
+    border-radius: 10px;
+    padding: 5px 15px;
+    margin-right: 1rem;
+}
+
+.data-mes {
+    font-size: 12px;
+    color: #3F9DAC;
+    font-weight: 800;
+}
+
+.data-dia {
+    font-size: 20px;
+    color: #3F9DAC;
+    font-weight: 800;
+}
+
+.info-pagamento {
+    flex-grow: 1;
+    
+}
+
+.titulo-pagamento {
+    font-size: 14px;
+    color: #212121;
+    padding: 0;
+    margin: 0; 
+}
+
+.detalhes-pagamento {
+    display: flex;
+    gap: 10px;
+    font-size: 12px;
+    color: #969696;
+}
+
+.status{
+    color: #AC2323;
+    
+}
+
+.valor-pagamento {
+    text-align: right;
+    display: flex;
+    flex-direction: column; /* Alinha os elementos em uma coluna */
+    align-items: flex-end; /* Garante alinhamento à direita */
+}
+
+.frequencia {
+    font-size: 14px;
+    color: #BEBEBE;
+}
+
+.valor {
+    font-size: 18px;
+    color: #1E1E1E;
+    font-weight: bold;
+}
+
+.sem-pagamentos {
+    font-size: 14px;
+    color: #969696;
+    text-align: center;
+    margin-top: 10px;
+}
+
+
+.actions {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-left: 1rem;
+  }
+  
+  .dots {
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+  }
+  
+  .dots span {
+    display: block;
+    width: 4px;
+    height: 4px;
+    background-color: #7c7c7c;
+    border-radius: 50%;
+  }
+  
+  .menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background-color: white;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    border-radius: 4px;
+    overflow: hidden;
+    z-index: 10;
+  }
+  
+  .menu a {
+    display: block;
+    padding: 8px 12px;
+    text-decoration: none;
+    color: #333;
+  }
+  
+  .menu a:hover {
+    background-color: #f0f0f0;
+  }
+
+
+  .card-pagar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #efefef;
+    border-radius: 0px 0px 10px 10px;
+    padding: 10px;
+    text-align: left;
+}
+
+.card-pagar p {
+    color: #717171;
+    font-size: 14px;
+    margin: 0;
+}
+
+
+.btn-pagar {
+    background: #C7C7C7;
+    color: #717171;
+    border: 1px solid #717171;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: 700;
+}
+
+.lista-pagamentos-atrasado .card-pagamento,
+.lista-pagamentos-hoje .card-pagamento,
+.lista-pagamentos .card-pagamento {
+    position: relative; 
+    z-index: 2; 
+}
+
+.lista-pagamentos-atrasado .card-pagar,
+.lista-pagamentos-hoje .card-pagar,
+.lista-pagamentos .card-pagar {
+    position: relative; 
+    margin-top: -5px; 
+    z-index: 1; 
+}
+
+
+
+/* Alerta de Pagamentos */
+.alerta-pagamento {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 1rem;
+    padding: 1rem;
+    background: #FFF8E1;
+    border-radius: 5px;
+    color: #333;
+}
+
+
+
+/* Calendário */
+.calendario {
+    background: white;
+    border-radius: 10px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.header-calendario {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.mes-atual {
+    font-size: 1.2rem;
+    color: #333;
+}
+
+.navegacao-calendario button {
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+    cursor: pointer;
+    color: #3F9DAC;
+}
+
+.grid-calendario {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 5px;
+    margin-bottom: 1rem;
+}
+
+.dia-semana {
+    font-size: 0.9rem;
+    color: #888;
+    text-align: center;
+}
+
+/* Modal Styles */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 9999;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-conteudo {
+    background: white;
+    margin: 10% auto;
+    padding: 2rem;
+    width: 90%;
+    max-width: 500px;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    position: relative;
+}
+
+.form-grupo {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1rem;
+}
+
+.form-grupo label {
+    font-size: 0.9rem;
+    color: #333;
+    margin-bottom: 0.5rem;
+}
+
+.form-grupo input,
+.form-grupo select {
+    padding: 0.5rem;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.opcoes-pagamento {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+#modalPagarConta {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    padding: 20px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    display: none; /* Inicialmente oculto */
+}
+
+#modalPagarConta .modal-content {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+

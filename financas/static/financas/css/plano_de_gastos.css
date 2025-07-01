@@ -1,0 +1,184 @@
+.plano-gastos {
+  width: 876px;
+  min-height: 832px;
+  margin: 0 auto;
+}
+
+.container {
+  padding: 70px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 35px;
+}
+
+/* Header section */
+.nome-pagina {
+  height: 47px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.nome-pagina h1 {
+  color: #212121;
+  font-size: 25px;
+  font-weight: 400;
+}
+
+.nome-pagina .data {
+  color: #BEBEBE;
+  font-size: 14px;
+}
+
+/* Main graph container */
+.container-grafico-geral {
+  padding: 20px 30px;
+  background: white;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  gap: 72px;
+}
+
+/* Chart container */
+.chart-container {
+  width: 240px;
+  height: 240px;
+  position: relative;
+}
+
+/* Expenses info */
+.gastos-info {
+  width: 500px;
+  display: flex;
+  flex-direction: column;
+}
+
+.gastos-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 25px;
+  color: #434343;
+  font-size: 12px;
+}
+
+.gastos-list {
+  margin: 20px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.gasto-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.categoria {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.dot {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+}
+
+/* Colors */
+.yellow-bg { background: #FFF7B8; }
+.purple-bg { background: #C5B8FF; }
+.orange-bg { background: #FFBAB8; }
+.green-bg { background: #DDFFB8; }
+.blue-bg { background: #B8DBFF; }
+
+/* Border colors */
+.yellow-border { border-color: #FECC01; }
+.purple-border { border-color: #820AD1; }
+.orange-border { border-color: #D1560A; }
+.green-border { border-color: #5D9124; }
+.blue-border { border-color: #34669A; }
+
+.green { color: #5D9953; }
+.red { color: #AC2323; }
+
+/* Summary section */
+.resumo-gastos {
+  display: flex;
+  gap: 30px;
+  margin-top: 20px;
+}
+
+.resumo-item {
+  padding: 5px 10px;
+}
+
+.resumo-item .valor {
+  font-size: 20px;
+  color: #212121;
+}
+
+.resumo-item .label {
+  color: #BEBEBE;
+  font-size: 14px;
+  text-transform: capitalize;
+}
+
+/* Planned expenses section */
+.container-despesas-planejadas {
+  padding: 20px 5px;
+  background: white;
+  border-radius: 20px;
+}
+
+.titulo {
+  padding: 0 20px;
+  color: #929292;
+  font-size: 15px;
+}
+
+.despesas-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 5px;
+  padding: 10px 5px;
+}
+
+.despesa-item {
+  width: 282px;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.icon {
+  width: 45px;
+  height: 45px;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.vector {
+  width: 20px;
+  height: 19px;
+  border: 2.5px solid;
+}
+
+/* Progress bar chart container */
+.progress-bar-chart {
+  width: 210px !important;
+  height: 10px !important;
+  margin-top: 5px;
+}
+
+.valor-faltante {
+  text-align: right;
+  color: #BEBEBE;
+  font-size: 9px;
+}

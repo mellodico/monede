@@ -1,0 +1,42 @@
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'financas/css/perfil_menu.css' %}">
+<script src="{% static 'js/perfil_menu.js' %}"></script>
+{% endblock %}
+
+<div class="perfil-container">
+    <div class="perfil-wrapper">
+        <button type="button" id="perfilButton" class="perfil-botao">
+            <img src="{{ usuario.foto_url|default:'/static/images/default-profile.png' }}" 
+                 alt="Foto de perfil" 
+                 class="foto-perfil">
+            <div class="menu-icon">
+                <img src="{% static 'icons/seta-transacoes.svg' %}">
+            </div>
+        </button>
+        
+        <div class="perfil-menu" id="perfilMenu">
+            <div class="menu-arrow"></div>
+            <div class="menu-items">
+                
+                <a href="{% url 'meus_cartoes' %}" class="menu-item">
+                    <img src="{% static 'icons/minhas-contas-icon.svg' %}" class="menu-icon">
+                    carteira
+                </a>
+                <a href="{% url 'meus_limites' %}" class="menu-item">
+                    <img src="{% static 'icons/meus-limites-icon.svg' %}" class="menu-icon">
+                    Meus Limites
+                </a>
+                <a href="{% url 'categorias' %}" class="menu-item">
+                    <img src="{% static 'icons/categorias-icon.svg' %}" class="menu-icon">
+                    Categorias
+                </a>
+                <a href="{% url 'subcategorias' %}" class="menu-item">
+                    <img src="{% static 'icons/subcategorias-icon.svg' %}" class="menu-icon">
+                    Subcategorias
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

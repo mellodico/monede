@@ -1,0 +1,283 @@
+{% extends 'financas/base.html' %}
+
+{% load static %}
+
+{% block extra_css %}
+  <link rel="stylesheet" href="{% static 'financas/css/pagamentos.css' %}">
+  <script src="{% static 'js/pagamentos.js' %}"></script>
+{% endblock %}
+
+{% block title %}Pagamentos{% endblock %}
+
+{% block content %}
+<div class="container">
+    <header class="header">
+        <h1 class="titulo-pagina">Pagamentos</h1>
+        <button class="btn-adicionar" onclick="abrirModalNovoPagamento()">
+            <i class="fas fa-plus"></i>
+            <img src="{% static 'icons/addTransação-Vector.svg' %}" class="vector" alt="Ícone">
+            Adicionar Pagamento
+        </button>
+    </header>
+
+    <main class="conteudo-principal">
+        <!-- Seção de Pagamentos Atrasados -->
+        <section class="pagamentos-secao-atrasados">
+            <h2 class="titulo-secao">Pagamentos Atrasados</h2>
+            <div class="lista-pagamentos-atrasado">
+                {% for pagamento in pagamentos_atrasados %}
+                <div class="card-pagamento">
+                    <div class="data-box">
+                        <div class="data-mes">{{ pagamento.data_vencimento|date:"M" }}</div>
+                        <div class="data-dia">{{ pagamento.data_vencimento|date:"d" }}</div>
+                    </div>
+                    <div class="info-pagamento">
+                        <h3 class="titulo-pagamento">{{ pagamento.titulo }}</h3>
+                        <div class="detalhes-pagamento">
+                            <span class="status">{{ pagamento.get_status_display }}</span>
+                            <span class="data">{{ pagamento.data_vencimento|date:"d M, Y" }}</span>
+                        </div>
+                    </div>
+                    <div class="valor-pagamento">
+                        <span class="frequencia">{{ pagamento.get_frequencia_display }}</span>
+                        <span class="valor">R$ {{ pagamento.valor|floatformat:2 }}</span>
+                    </div>
+                    <div class="actions">
+                        <div class="dots" onclick="toggleMenu(this)">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
+                        <div class="menu">
+                            <a href="#" class="editar-transacao">Editar</a>
+                            <a href="#" class="excluir-transacao">Excluir</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-pagar">
+                    <p>Esta conta está atrasada, pague agora.</p>
+                    <button type="button" class="btn-pagar" onclick="abrirModalPagarConta('{{ pagamento.id }}')">Pagar Conta</button>
+
+                </div>
+                {% empty %}
+                <p class="sem-pagamentos">Nenhum pagamento atrasado neste mês</p>
+                {% endfor %}
+            </div>
+        </section>
+
+        <!-- Seção de Pagamentos de Hoje -->
+        <section class="pagamentos-secao">
+            <h2 class="titulo-secao">Hoje</h2>
+            <div class="lista-pagamentos-hoje">
+                {% for pagamento in pagamentos_hoje %}
+                <div class="card-pagamento">
+                    <div class="data-box">
+                        <div class="data-mes">{{ pagamento.data_vencimento|date:"M" }}</div>
+                        <div class="data-dia">{{ pagamento.data_vencimento|date:"d" }}</div>
+                    </div>
+                    <div class="info-pagamento">
+                        <h3 class="titulo-pagamento">{{ pagamento.titulo }}</h3>
+                        <div class="detalhes-pagamento">
+                            <span class="status">{{ pagamento.get_status_display }}</span>
+                            <span class="data">{{ pagamento.data_vencimento|date:"d M, Y" }}</span>
+                        </div>
+                    </div>
+                    <div class="valor-pagamento">
+                        <span class="frequencia">{{ pagamento.get_frequencia_display }}</span>
+                        <span class="valor">R$ {{ pagamento.valor|floatformat:2 }}</span>
+                    </div>
+                    <div class="actions">
+                        <div class="dots" onclick="toggleMenu(this)">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
+                        <div class="menu">
+                            <a href="#" class="editar-transacao">Editar</a>
+                            <a href="#" class="excluir-transacao">Excluir</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-pagar">
+                    <p>Essa conta vence hoje, pague agora.</p>
+                    <button type="button" class="btn-pagar" onclick="abrirModalPagarConta('{{ pagamento.id }}')">Pagar Conta</button>
+
+                </div>
+                {% empty %}
+                <p class="sem-pagamentos">Nenhum pagamento para hoje</p>
+                {% endfor %}
+            </div>
+        </section>
+
+        <!-- Seção de Pagamentos da Semana -->
+        <section class="pagamentos-secao-esta-semana">
+            <h2 class="titulo-secao">Esta Semana</h2>
+            <div class="lista-pagamentos">
+                {% for pagamento in pagamentos_semana %}
+                <div class="card-pagamento">
+                    <div class="data-box">
+                        <div class="data-mes">{{ pagamento.data_vencimento|date:"M" }}</div>
+                        <div class="data-dia">{{ pagamento.data_vencimento|date:"d" }}</div>
+                    </div>
+                    <div class="info-pagamento">
+                        <h3 class="titulo-pagamento">{{ pagamento.titulo }}</h3>
+                        <div class="detalhes-pagamento">
+                            <span class="status">{{ pagamento.get_status_display }}</span>
+                            <span class="data">{{ pagamento.data_vencimento|date:"d M, Y" }}</span>
+                        </div>
+                    </div>
+                    <div class="valor-pagamento">
+                        <span class="frequencia">{{ pagamento.get_frequencia_display }}</span>
+                        <span class="valor">R$ {{ pagamento.valor|floatformat:2 }}</span>
+                    </div>
+                    <div class="actions">
+                        <div class="dots" onclick="toggleMenu(this)">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
+                        <div class="menu">
+                            <a href="#" class="editar-transacao">Editar</a>
+                            <a href="#" class="excluir-transacao">Excluir</a>
+                        </div>
+                    </div>
+                </div>
+                {% empty %}
+                <p class="sem-pagamentos">Nenhum pagamento esta semana</p>
+                {% endfor %}
+            </div>
+        </section>
+
+        <!-- Seção de Pagamentos do Mês -->
+        <section class="pagamentos-secao-este-mes">
+            <h2 class="titulo-secao">Este Mês</h2>
+            <div class="lista-pagamentos">
+                {% for pagamento in pagamentos_mes %}
+                <div class="card-pagamento">
+                    <div class="data-box">
+                        <div class="data-mes">{{ pagamento.data_vencimento|date:"M" }}</div>
+                        <div class="data-dia">{{ pagamento.data_vencimento|date:"d" }}</div>
+                    </div>
+                    <div class="info-pagamento">
+                        <h3 class="titulo-pagamento">{{ pagamento.titulo }}</h3>
+                        <div class="detalhes-pagamento">
+                            <span class="status">{{ pagamento.get_status_display }}</span>
+                            <span class="data">{{ pagamento.data_vencimento|date:"d M, Y" }}</span>
+                        </div>
+                    </div>
+                    <div class="valor-pagamento">
+                        <span class="frequencia">{{ pagamento.get_frequencia_display }}</span>
+                        <span class="valor">R$ {{ pagamento.valor|floatformat:2 }}</span>
+                    </div>
+                    <div class="actions">
+                        <div class="dots" onclick="toggleMenu(this)">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
+                        <div class="menu">
+                            <a href="#" class="editar-transacao">Editar</a>
+                            <a href="#" class="excluir-transacao">Excluir</a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </section>
+    </main>
+</div>
+<!-- Modal Novo Pagamento -->
+<div id="modalNovoPagamento" class="modal" style="display: none;">
+    <div class="modal-conteudo">
+        <span class="fechar-modal" onclick="fecharModalNovoPagamento()">&times;</span>
+        <h2>Adicionar Novo Pagamento</h2>
+        <form id="formNovoPagamento" data-url="{% url 'adicionar_pagamento' %}" onsubmit="salvarNovoPagamento(event)">
+            {% csrf_token %}
+            <div class="form-grupo">
+                <label for="titulo">Título</label>
+                <input type="text" id="titulo" name="titulo" required>
+            </div>
+            <div class="form-grupo">
+                <label for="valor">Valor</label>
+                <input type="number" id="valor" name="valor" step="0.01" required>
+            </div>
+            <div class="form-grupo">
+                <label for="data_vencimento">Data de Vencimento</label>
+                <input type="date" id="data_vencimento" name="data_vencimento" required>
+            </div>
+            <div class="form-grupo">
+                <label for="frequencia">Frequência</label>
+                <select id="frequencia" name="frequencia" required>
+                    <option value="unica">Única</option>
+                    <option value="mensal">Mensal</option>
+                    <option value="anual">Anual</option>
+                </select>
+            </div>
+            <button type="submit" class="btn-adicionar">Salvar</button>
+        </form>
+    </div>
+</div>
+
+<!-- Modal para Pagar Conta -->
+<div id="modalPagarConta" class="modal" style="display: none;">
+    <div class="modal-conteudo">
+        <span class="fechar-modal" onclick="fecharModalPagarConta()">&times;</span>
+        <h2>Pagar Conta</h2>
+        <form id="formPagarConta" data-pagamento-id="" onsubmit="processarPagamento(event)">
+            <!-- Dados do pagamento (não editáveis) -->
+            <div class="form-grupo">
+                <label for="titulo">Título</label>
+                <input type="text" id="titulo" name="titulo" readonly>
+            </div>
+            <div class="form-grupo">
+                <label for="valor">Valor</label>
+                <input type="text" id="valor" name="valor" readonly>
+            </div>
+            <div class="form-grupo">
+                <label for="data_vencimento">Data de Vencimento</label>
+                <input type="text" id="data_vencimento" name="data_vencimento" readonly>
+            </div>
+
+                        <!-- Escolher entre Conta ou Cartão -->
+            <div class="form-grupo">
+                <label>Forma de Pagamento</label>
+                <div>
+                    <label>
+                        <input type="radio" name="tipo" value="conta" checked> Conta
+                    </label>
+                    <label>
+                        <input type="radio" name="tipo" value="cartao"> Cartão
+                    </label>
+                </div>
+            </div>
+
+            <!-- Campo para selecionar Conta -->
+            <div class="grupo-form" id="grupo-conta" style="display: block;"> <!-- Inicialmente visível -->
+                <label for="conta">Conta</label>
+                <select id="conta" name="conta" class="input-padrao">
+                    <option value="">Selecionar conta</option>
+                    {% for conta in contas %}
+                    <option value="{{ conta.id }}">{{ conta.nome }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <!-- Campo para selecionar Cartão -->
+            <div class="grupo-form" id="grupo-cartao" style="display: none;"> <!-- Inicialmente oculto -->
+                <label for="cartao">Cartão</label>
+                <select id="cartao" name="cartao" class="input-padrao">
+                    <option value="">Selecionar cartão</option>
+                    {% for cartao in cartoes %}
+                    <option value="{{ cartao.id }}">{{ cartao.nome }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+
+            <button type="submit" class="btn-adicionar">Confirmar Pagamento</button>
+        </form>
+    </div>
+</div>
+
+
+{% endblock %}

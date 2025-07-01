@@ -1,0 +1,26 @@
+{% load static %}
+{% block extra_css %} 
+<link rel="stylesheet" href="{% static 'financas/css/calendarioMes.css' %}"> 
+<script src="{% static 'js/calendarioMes.js' %}"></script>
+{% endblock %}
+
+<div class="date-picker">
+  <input type="text" id="date-input" placeholder="Selecione uma data" readonly>
+  <div class="calendar" id="calendar">
+      <div class="calendar-header">
+          <span id="prev-month">&lt;</span>
+          <span id="month-year"></span>
+          <span id="next-month">&gt;</span>
+      </div>
+      <div class="calendar-body">
+          <div class="calendar-weekdays">
+              <span>Dom</span><span>Seg</span><span>Ter</span><span>Qua</span><span>Qui</span><span>Sex</span><span>Sáb</span>
+          </div>
+          <div class="calendar-days" id="calendar-days"></div>
+      </div>
+      <div class="calendar-footer">
+          <button id="cancel-btn">Cancelar</button>
+          <button id="apply-btn">Aplicar</button>
+      </div>
+  </div>
+</div>

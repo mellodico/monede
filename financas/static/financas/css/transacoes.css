@@ -1,0 +1,503 @@
+.conteudo {
+  max-width: 1150px;
+  margin: auto;
+  padding: 40px 10px;
+}
+
+.frame-212, .frame-210 {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.frame-210 {
+  margin-bottom: 26px;
+}
+
+.frame-209, .frame-208 {
+  display: flex;
+  gap: 10px;
+}
+
+.nome-pagina {
+  color: black;
+  font-size: 30px;
+  font-family: "Nunito", Arial, sans-serif;
+}
+
+.botao-add-transacao {
+  padding: 7px 10px;
+  background: #3F9DAC;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  border: none;
+  cursor: pointer;
+}
+
+.botao-add-transacao .vector {
+  width: 12px;
+  height: 12px;
+  border: none;
+}
+
+.adicionar-transacao {
+  color: #D0EAEE;
+  font-size: 14px;
+  font-family: "Nunito", Arial, sans-serif;
+}
+
+.dropdown, .dropdown-button-ultimos-7dias, .date-picker-button-inicial, .date-picker-button-final{
+  padding: 8px 15px;
+  background: #F2F2F2;
+  border-radius: 10px;
+  border: 1px solid #BEBEBE;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-family: "Nunito", Arial, sans-serif;
+  font-size: 12px;
+  color: #BEBEBE;
+  cursor: pointer;
+}
+.filtros-container {
+  display: flex;
+  justify-content: space-between; /* Elementos ficam um à esquerda e outro à direita */
+  align-items: center; /* Alinha verticalmente no centro */
+  padding: 0 20px; /* Espaçamento lateral */
+  width: 100%; /* Garante que o contêiner ocupe toda a largura disponível */
+}
+
+.select-filtros, 
+input[type="date"], 
+.input-pesquisa {
+  padding: 8px 15px;
+  background: #F8F8F8;
+  border: 1px solid #BEBEBE;
+  border-radius: 20px;
+  font-family: "Nunito", Arial, sans-serif;
+  font-size: 14px;
+  color: #555;
+  outline: none;
+  width: auto;
+  min-width: 120px;
+}
+
+.select-filtros {
+  cursor: pointer;
+}
+
+.input-pesquisa {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.vector-pesquisa {
+  width: 16px;
+  height: 16px;
+  margin-left: -30px;
+  cursor: pointer;
+}
+
+.barra-pesquisa {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.campo-filtro {
+  display: flex;
+  flex-direction: column;
+}
+
+.botao-submit {
+  padding: 8px 20px;
+  background: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  font-family: "Nunito", Arial, sans-serif;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.botao-submit:hover {
+  background: #45a049;
+}
+
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #FFFFFF;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  border: 1px solid #E0E0E0;
+  z-index: 1;
+}
+
+.dropdown-content a {
+  color: #333333;
+  padding: 10px 15px;
+  text-decoration: none;
+  font-family: "Nunito", Arial, sans-serif;
+  font-size: 12px;
+  display: block;
+  border-bottom: 1px solid #E0E0E0;
+}
+
+.dropdown-content a:hover {
+  background-color: #F5F5F5;
+}
+
+.dropdown-content a:last-child {
+  border-bottom: none;
+}
+
+.date-input, .barra-pesquisa .input-pesquisa::placeholder {
+  color: #BEBEBE;
+}
+
+.date-input {
+  padding: 8px 15px;
+  background: #F2F2F2;
+  border-radius: 10px;
+  border: 1px solid #BEBEBE;
+  font-family: "Nunito", Arial, sans-serif;
+  font-size: 12px;
+  color: #333;
+  display: none;
+}
+
+.date-input:focus {
+  border-color: #007BFF;
+  outline: none;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+.barra-pesquisa {
+  width: 265px;
+  background: #F2F2F2;
+  border-radius: 10px;
+  border: 1px solid #BEBEBE;
+  display: flex;
+  align-items: center;
+  padding: 0 10px;
+  gap: 8px;
+}
+
+.input-pesquisa {
+  width: 100%;
+  padding: 8px 0;
+  border: none;
+  background: transparent;
+  font-family: "Nunito", Arial, sans-serif;
+  font-size: 14px;
+  color: #212121;
+  outline: none;
+}
+
+.tabela-transacoes, table {
+  width: 100%;
+}
+
+table {
+  border-collapse: separate;
+  border-spacing: 0 15px;
+}
+
+th {
+  color: #212121;
+  font-size: 14px;
+  font-family: "Nunito", Arial, sans-serif;
+  text-align: left;
+  padding: 0 10px;
+}
+
+.item-container {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.item-icon {
+  width: 40px;
+  height: 40px;
+  padding: 15px;
+  background: #F2F2F2;
+  border-radius: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.item-icon img {
+  max-width: 100%; /* A largura máxima será igual à do contêiner */
+  max-height: 100%; /* A altura máxima será igual à do contêiner */
+  object-fit: contain; /* A imagem será ajustada mantendo suas proporções */
+}
+
+.item-name {
+  
+  font-family: "Nunito", Arial, sans-serif;
+  color: black;
+}
+
+.tipo {
+  font-size: 14px;
+  font-family: "Nunito", Arial, sans-serif;
+}
+
+.tipo.despesa {
+  color: #AC2323;
+}
+
+.tipo.receita {
+  color: #2A741D;
+}
+
+.banco {
+  font-size: 14px;
+  font-family: "Nunito", Arial, sans-serif;
+}
+
+.banco.nubank {
+  color: #6C48E3;
+}
+
+.banco.itau {
+  color: #E0C986;
+}
+
+.categoria {
+  padding: 3px 10px;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  font-family: "Nunito", Arial, sans-serif;
+  color: #FFFFFF;
+}
+
+.categoria.compras {
+  background: #E9A2D7;
+  color: #9F2781;
+}
+
+.categoria.transporte {
+  background: #EDC87E;
+  color: #C89558;
+}
+
+.actions {
+  position: relative;
+  padding: 0px 20px;
+}
+
+.dots {
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+}
+
+.dots span {
+  display: block;
+  width: 3px;
+  height: 3px;
+  background-color: #7c7c7c;
+  border-radius: 50%;
+}
+
+.menu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background-color: white;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  border-radius: 4px;
+  overflow: hidden;
+  z-index: 10;
+}
+
+.menu a {
+  display: block;
+  padding: 8px 12px;
+  text-decoration: none;
+  color: #333;
+}
+
+.menu a:hover {
+  background-color: #f0f0f0;
+}
+
+
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-content {
+  background-color: #fefefe;
+  margin: 15% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 30%;
+}
+
+.close-button {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close-button:hover,
+.close-button:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+
+.filtros-selecionados {
+  margin-top: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.filtro-selecionado {
+  background-color: #3F9DAC;
+  color: #D0EAEE;
+  padding: 5px 10px;
+  border-radius: 20px;
+  font-family: "Nunito", Arial, sans-serif;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+}
+
+.filtro-selecionado:hover {
+  background-color: #348591;
+}
+
+.filtro-selecionado img {
+  width: 10px;
+  height: 10px;
+}
+
+/* static/financas/css/transacoes.css */
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+}
+
+.conteudo-modal {
+  background-color: white;
+  margin: 10% auto;
+  padding: 24px;
+  border-radius: 16px;
+  width: 90%;
+  max-width: 480px;
+  position: relative;
+}
+
+.cabecalho-modal {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.cabecalho-modal h2 {
+  font-size: 20px;
+  font-weight: 600;
+  color: #1A1A1A;
+  margin: 0;
+}
+
+.botao-fechar {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: #666;
+  padding: 0;
+}
+
+.grupo-form {
+  margin-bottom: 20px;
+}
+
+.grupo-form label {
+  display: block;
+  margin-bottom: 8px;
+  color: #1A1A1A;
+  font-size: 14px;
+}
+
+.input-padrao {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #E5E5E5;
+  border-radius: 8px;
+  font-size: 14px;
+}
+
+.input-valor {
+  display: flex;
+  align-items: center;
+  border: 1px solid #E5E5E5;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.prefixo-valor {
+  padding: 12px;
+  background-color: #F8F8F8;
+  color: #666;
+  border-right: 1px solid #E5E5E5;
+}
+
+.input-valor input {
+  border: none;
+  flex: 1;
+  padding: 12px;
+}
+
+.botao-criar {
+  width: 100%;
+  padding: 12px;
+  background-color: #3F9DAC;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 8px;
+}

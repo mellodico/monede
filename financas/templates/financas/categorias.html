@@ -1,0 +1,128 @@
+{% extends 'financas/base.html' %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'financas/css/categorias.css' %}">
+<script src="{% static 'js/categorias.js' %}"></script>
+{% endblock %}
+
+{% block title %}Categoria{% endblock %}
+
+{% block content %}
+<div class="container-categorias">
+    <div class="cabecalho">
+        <div class="botao-voltar">
+            <a href="{% url 'inicio' %}">
+                <i class="fas fa-chevron-left"></i>
+            </a>
+        </div>
+        <h1>minhas categorias</h1>
+        <div class="icone-pesquisa">
+            <i class="fas fa-search"></i>
+        </div>
+    </div>
+
+    <!-- Categorias personalizadas -->
+    <div class="lista-categorias">
+        {% for categoria in categorias_usuario %}
+        <div class="item-categoria" onclick="abrirModal('{{ categoria.nome }}', '{{ categoria.cor }}', '{{ categoria.icone }}')">
+            <div class="icone-categoria" style="background-color: {{ categoria.cor }}">
+                <i class="{{ categoria.icone }}"></i>
+            </div>
+            <span class="nome-categoria">{{ categoria.nome }}</span>
+        </div>
+        {% empty %}
+        <p>Você ainda não tem categorias personalizadas.</p>
+        {% endfor %}
+    </div>
+
+    <!-- Categorias padrões -->
+    <div class="lista-categorias">
+        {% for categoria in categorias_padrao %}
+        <div class="item-categoria" onclick="abrirModal('{{ categoria.nome }}', '{{ categoria.cor }}', '{{ categoria.icone }}')">
+            <div class="icone-categoria" style="background-color: {{ categoria.cor }}">
+                <i class="{{ categoria.icone }}"></i>
+            </div>
+            <span class="nome-categoria">{{ categoria.nome }}</span>
+        </div>
+        {% endfor %}
+    </div>
+
+    
+<!-- Modal para criar categoria -->
+<div id="modalCategoriaInfo" class="modal" style="display: none;">
+    <div class="conteudo-modal">
+        <div class="modal-cabecalho">
+            <h2>Informações da Categoria</h2>
+            <button class="fechar-modal" onclick="fecharModal()">X</button>
+        </div>
+        <div class="modal-corpo">
+            <div class="info-categoria">
+                <div class="icone-categoria" id="modal-icone-categoria"></div>
+                <h3 id="modal-nome-categoria"></h3>
+            </div>
+            <form id="form-limite" method="POST" action="{% url 'adicionar_limite' %}">
+                {% csrf_token %}
+                <input type="hidden" name="categoria_nome" id="input-nome-categoria">
+                <div class="grupo-formulario">
+                    <label>Valor do Limite</label>
+                    <div class="value-input-wrapper">
+                        <span class="currency">R$</span>
+                        <input type="number" name="valor" id="valor" step="0.01" required />
+                    </div>
+                    <input type="range" id="valor-slider" min="0" max="10000" step="100" />
+                </div>
+                <div class="grupo-formulario">
+                    <label>Recorrência</label>
+                    <div class="select-wrapper">
+                        <select name="recorrencia" required>
+                            <option value="mensal" selected>Mensal</option>
+                            <option value="diario">Diário</option>
+                            <option value="semanal">Semanal</option>
+                            <option value="anual">Anual</option>
+                        </select>
+                    </div>
+                </div>
+                <button type="submit" class="botao-salvar">Salvar</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Modal de Adicionar Limite -->
+<div id="modalCategoria" class="modal" style="display: none;">
+    <div class="modal-conteudo">
+        <div class="modal-cabecalho">
+            <h2>Adicionar Limite para Categoria</h2>
+            <button class="fechar-modal" onclick="fecharModal()">X</button>
+        </div>
+        <div class="modal-corpo">
+            <h3 id="categoria-nome-modal"></h3> <!-- Nome da categoria será preenchido aqui -->
+            <form id="form-limite">
+                <div class="form-group">
+                    <label>Valor do Limite</label>
+                    <div class="value-input-wrapper">
+                        <span class="currency">R$</span>
+                        <input type="number" name="valor" id="valor" step="0.01" required />
+                    </div>
+                    <input type="range" id="valor-slider" min="0" max="10000" step="100" />
+                </div>
+                <div class="form-group">
+                    <label>Recorrência</label>
+                    <div class="select-wrapper">
+                        <select name="recorrencia" required>
+                            <option value="mensal" selected>Mensal</option>
+                            <option value="diario">Diário</option>
+                            <option value="semanal">Semanal</option>
+                            <option value="anual">Anual</option>
+                        </select>
+                    </div>
+                </div>
+                <button type="submit" class="btn-submit">Salvar</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

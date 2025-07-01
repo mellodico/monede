@@ -1,0 +1,72 @@
+{% extends 'financas/base.html' %}
+{% load static %}
+
+{% block title %}Relatórios{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'financas/css/relatorios.css' %}">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="{% static 'js/relatorios.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+<div class="dashboard-grid">
+    <!-- Gráfico de Gastos -->
+    <div class="card">
+        <div class="card-header">
+            <div>
+                <div class="card-title">Gastos ao Longo do Tempo</div>
+                <div class="card-subtitle">Análise temporal</div>
+            </div>
+            <select id="timeRange" onchange="updateTimeRange(this.value)">
+                <option value="daily">Diário</option>
+                <option value="weekly">Semanal</option>
+                <option value="biweekly">Quinzenal</option>
+                <option value="monthly">Mensal</option>
+            </select>
+        </div>
+        <canvas id="expensesChart"></canvas>
+    </div>
+
+    <!-- Gastos por Categoria -->
+    <div class="card">
+        <div class="card-header">
+            <div>
+                <div class="card-title">Distribuição de Gastos</div>
+                <div class="card-subtitle">Por categoria</div>
+            </div>
+        </div>
+        <canvas id="categoryChart"></canvas>
+    </div>
+
+    <!-- Meta de Gastos -->
+    <div class="card">
+        <div class="card-header">
+            <div>
+                <div class="card-title">Metas de Gastos</div>
+                <div class="card-subtitle">Progresso mensal</div>
+            </div>
+        </div>
+        <div class="progress-container">
+            <div class="progress-label">
+                <span>Atual: <span id="currentSpending">R$ 3.245</span></span>
+                <span>Meta: <span id="targetSpending">R$ 5.000</span></span>
+            </div>
+            <div class="progress-bar">
+                <div id="progressBar" class="progress-value" style="width: 65%"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Balanço Financeiro -->
+    <div class="card">
+        <div class="card-header">
+            <div>
+                <div class="card-title">Balanço Financeiro</div>
+                <div class="card-subtitle">Receitas vs Despesas</div>
+            </div>
+        </div>
+        <canvas id="balanceChart"></canvas>
+    </div>
+</div>
+{% endblock %}

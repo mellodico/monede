@@ -1,0 +1,50 @@
+/* CSS */
+.contas-cartoes-component {
+  background: #F0F0F0;
+  border-radius: 20px;
+  padding: 20px 20px;
+  margin-bottom: 15px;
+  transition: all 0.3s ease;
+}
+
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.title {
+  font-size: 20px;
+}
+
+.expand-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+.button-icon-contas-cartao {
+  transition: transform 0.3s ease;
+  height: 35px;
+  width:35px;
+}
+
+.content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+}
+
+.expanded-content {
+  padding-top: 20px;
+}
+
+/* Classes para estados expandidos */
+.contas-cartoes-component.expanded .content {
+  max-height: 350px; /* Ajuste este valor conforme necessário */
+}
+
+.contas-cartoes-component.expanded .button-icon-contas-cartao {
+  transform: rotate(180deg);
+}

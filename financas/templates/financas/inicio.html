@@ -1,0 +1,60 @@
+{% extends 'financas/base.html' %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'financas/css/inicio.css' %}">
+{% endblock %}
+
+{% block title %}Início{% endblock %}
+
+{% block content %}
+<div class="conteudo">
+    <div class="conteudo-atualz">
+        <div class="fundo">
+            <!-- Incluindo o componente do menu de perfil -->
+            {% include 'components/perfil_menu.html' %}
+        </div>
+
+        <div class="ola-usuario">
+            Olá, Vinicius!
+        </div>
+
+        <div class="conteudo-extrato">
+            <div class="receita">
+                <div>Receita</div>
+                <div class="receita-usuario">R$11.345</div>
+            </div>
+
+            <div class="despesas">
+                <div>Despesas</div>
+                <div class="despesa-usuario">R$7.679</div>
+            </div>
+
+            <div class="balanço">
+                <div>Balanço</div>
+                <div class="despesa-usuario">R$3.666</div>
+            </div>
+        </div>
+    </div>
+
+    <div>
+        {% include 'components/contasCartoes.html' %}
+    </div>
+
+    <div class="tabela-transacoes">
+        <div class = "titulo-tabela">Transações</div>
+        {% for transacao in transacoes %}
+        <div class="item-tabela">
+            <div class="frame-icon">
+                <img src="{{ transacao.logo.imagem.url }}" alt="{{ transacao.titulo }}">
+            </div>
+            <div class="transacao-info">
+                <div class="transacao-nome">{{ transacao.titulo }}</div>
+                <div class="transacao-data">{{ transacao.data|date:"d/m/Y" }}</div>
+            </div>
+            <div class="transacao-valor">{{ transacao.valor }}</div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

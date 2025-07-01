@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+  <h2 class="titulo">Bancos</h2>
+  <div class="lista-bancos">
+    {% for banco in bancos %}
+      <div class="banco-card">
+        <img src="{{ banco.icone.url }}" alt="{{ banco.nome }}" class="icone-banco">
+        <h3 class="nome-banco">{{ banco.nome }}</h3>
+      </div>
+    {% endfor %}
+  </div>
+  <!-- Botão para abrir o modal -->
+  <button class="btn btn-primary" onclick="abrirModalBanco()">Adicionar Banco</button>
+
+  <!-- Modal -->
+  <div class="modal" id="modalCriarBanco">
+    <div class="modal-conteudo">
+      <span class="fechar" onclick="fecharModalBanco()">&times;</span>
+      <h2 class="titulo">Criar Banco</h2>
+      <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">Salvar</button>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

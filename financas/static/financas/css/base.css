@@ -1,0 +1,17 @@
+
+body {
+    margin: 0;
+    padding: 0;
+    background: #F8F8F8;
+    font-family: "Nunito", Arial, sans-serif;
+    font-weight: 700;
+    font-style: normal;
+}
+
+
+
+.main-content {
+    flex: 1;
+    margin-left: 250px;
+    min-height: 100vh;
+}

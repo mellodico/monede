@@ -1,0 +1,109 @@
+{% extends 'financas/base.html' %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'financas/css/subcategorias.css' %}">
+<script src="{% static 'js/subcategorias.js' %}"></script>
+{% endblock %}
+
+{% block title %}Subcategoria{% endblock %}
+
+{% block content %}
+<div class="container-subcategorias">
+    <div class="cabecalho">
+        <div class="botao-voltar">
+            <a href="{% url 'inicio' %}">
+                <i class="fas fa-chevron-left"></i>
+            </a>
+        </div>
+        <h1>minhas subcategorias</h1>
+        <div class="icone-pesquisa">
+            <i class="fas fa-search"></i>
+        </div>
+    </div>
+
+    <div class="secao-minhas-subcategorias">
+        <h2>minhas subcategorias</h2>
+        <div class="botao-criar-subcategoria" id="botaoCriarSubcategoria">
+            <i class="fas fa-plus"></i>
+            criar uma subcategoria
+        </div>
+        <div class="lista-subcategorias">
+            {% for subcategoria in subcategorias_usuario %}
+            <div class="item-subcategoria">
+                <div class="icone-subcategoria" style="background-color: {{ subcategoria.cor }}">
+                    <i class="{{ subcategoria.icone }}"></i>
+                </div>
+                <span class="nome-subcategoria">{{ subcategoria.nome }}</span>
+            </div>
+            {% empty %}
+            <p>Você ainda não tem subcategorias personalizadas.</p>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="secao-subcategorias-padrao">
+        <h2>subcategorias padrões</h2>
+        <div class="lista-subcategorias">
+            {% for subcategoria in subcategorias_padrao %}
+            <div class="item-subcategoria">
+                <div class="icone-subcategoria" style="background-color: {{ subcategoria.cor }}">
+                    <i class="{{ subcategoria.icone }}"></i>
+                </div>
+                <span class="nome-subcategoria">{{ subcategoria.nome }}</span>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Modal para criar subcategoria -->
+    <div class="modal" id="modalSubcategoria">
+        <div class="conteudo-modal">
+            <form method="POST" action="{% url 'criar_subcategoria' %}" id="formularioSubcategoria">
+                {% csrf_token %}
+                <div class="grupo-formulario">
+                    <label>nome da subcategoria</label>
+                    {{ formulario.nome }}
+                </div>
+                
+                <div class="grupo-formulario">
+                    <label>escolha uma cor</label>
+                    <div class="seletor-cor">
+                        <div class="opcao-cor" data-cor="#808080"></div>
+                        <div class="opcao-cor" data-cor="#000000"></div>
+                        <div class="opcao-cor" data-cor="#4B0082"></div>
+                        <div class="opcao-cor" data-cor="#0000FF"></div>
+                        <div class="opcao-cor" data-cor="#00BFFF"></div>
+                        <div class="opcao-cor" data-cor="#00CED1"></div>
+                        <div class="opcao-cor" data-cor="#228B22"></div>
+                        <div class="opcao-cor" data-cor="#FFA500"></div>
+                    </div>
+                    {{ formulario.cor }}
+                </div>
+
+                <div class="grupo-formulario">
+                    <label>escolha um ícone</label>
+                    <div class="seletor-icone">
+                        <div class="opcao-icone" data-icone="fas fa-utensils"></div>
+                        <div class="opcao-icone" data-icone="fas fa-wrench"></div>
+                        <div class="opcao-icone" data-icone="fas fa-tshirt"></div>
+                        <div class="opcao-icone" data-icone="fas fa-credit-card"></div>
+                        <div class="opcao-icone" data-icone="fas fa-lock"></div>
+                        <div class="opcao-icone" data-icone="fas fa-dice"></div>
+                        <div class="opcao-icone" data-icone="fas fa-home"></div>
+                        <div class="opcao-icone" data-icone="fas fa-heart"></div>
+                        <div class="opcao-icone" data-icone="fas fa-star"></div>
+                        <div class="opcao-icone" data-icone="fas fa-gamepad"></div>
+                        <div class="opcao-icone" data-icone="fas fa-palette"></div>
+                        <div class="opcao-icone" data-icone="fas fa-mobile-alt"></div>
+                        <div class="opcao-icone" data-icone="fas fa-graduation-cap"></div>
+                    </div>
+                    {{ formulario.icone }}
+                </div>
+
+                <button type="submit" class="botao-salvar">salvar</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

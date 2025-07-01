@@ -1,0 +1,192 @@
+{% extends 'financas/base.html' %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'financas/css/metas.css' %}">
+<script src="{% static 'js/metas.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+<div class="painel-metas">
+    <div class="container-metas">
+        <div class="cabecalho">
+            <h1 class="titulo-pagina">Minhas Metas</h1>
+            <button class="botao-adicionar-meta" onclick="abrirModalMeta()">
+                <img src="{% static 'icons/addTransação-Vector.svg' %}" class="vector" alt="Ícone">
+                <span class="adicionar-transacao">Adicionar Transação</span>
+            </button>
+        </div>
+        
+        <div class="grade-metas">
+            {% for meta in metas %}
+            <div class="cartao-meta-botao">
+                <div class="cartao-meta">
+                    <div class="imagem-cartao" {% if meta.imagem %}style="background-image: url('{{ meta.imagem.url }}')"{% endif %}>
+                        <div class="sobreposicao-imagem sobreposicao-{{ meta.categoria.cor|default:'padrao' }}"></div>
+                    </div>
+                    <div class="conteudo-cartao">
+                        <div class="detalhes-meta">
+                            <div class="detalhes-meta-2">
+                                <span class="tag-categoria" style="background-color: {{ meta.categoria.cor|default:'#ccc' }}">
+                                    {{ meta.categoria.nome|default:"Sem categoria" }}
+                                </span>
+                            </div>
+                            <div class="principal">  
+                                <h3 class="titulo-meta">{{ meta.titulo }}</h3>
+                                <div class="actions">
+                                    <div class="dots" onclick="toggleMenu(this)">
+                                        <span></span>
+                                        <span></span>
+                                        <span></span>
+                                    </div>
+                                    <div class="menu">
+                                        <a href="{% url 'editar-meta' meta.id %}" class="editar-transacao" 
+                                           data-id="{{ meta.id }}" 
+                                           data-titulo="{{ meta.titulo }}" 
+                                           data-valor="{{ meta.valor_meta }}" 
+                                           data-categoria="{{ meta.categoria.id|default:'' }}">
+                                           Editar
+                                        </a>
+                                        <a href="{% url 'excluir-meta' meta.id %}" class="excluir-transacao" data-id="{{ meta.id }}">Excluir</a>
+                                    </div>
+                                </div>                                
+                            </div>
+                            <div class="valores-meta">
+                                <span class="valor-atual">R$ {{ meta.valor_atual|floatformat:2 }}</span>
+                                <span class="valor-meta">R$ {{ meta.valor_meta|floatformat:2 }}</span>
+                            </div>
+                        </div>
+                        <div class="barra-progresso" id="barra-progresso-{{ meta.id }}">
+                            <div class="progresso" style="width: 50%;"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="botao-baixo">
+                    <span class="adicionar-valor-text">Insira um valor na sua meta</span>
+                    <button class="botao_add_valor" data-meta-id="{{ meta.id }}" onclick="abrirModalValorMeta(this)">
+                      <span class="adicionar-valor">Adicionar Valor</span>
+                    </button>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+<!-- Modal Meta -->
+<div id="modalMeta" class="modal">
+    <div class="conteudo-modal">
+        <div class="cabecalho-modal">
+            <h2>Qual é a sua meta?</h2>
+            <button type="button" class="botao-fechar" onclick="fecharModalMeta()">&times;</button>
+        </div>
+        <form id="form-criar-meta" method="post" action="{% url 'criar-meta' %}" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="upload-imagem">
+                <label for="imagem">
+                    <div class="placeholder-upload">
+                        <i class="icone-imagem"></i>
+                        <span>Adicionar imagem</span>
+                    </div>
+                </label>
+                <input type="file" id="imagem" name="imagem" accept="image/*" hidden>
+            </div>
+            
+            <div class="grupo-form">
+                <label for="titulo">Título*</label>
+                <input type="text" id="titulo" name="titulo" required 
+                       placeholder="ex: comprar um carro" class="input-padrao">
+            </div>
+            
+            <div class="grupo-form">
+                <label for="valor_meta">Valor da meta*</label>
+                <div class="input-valor">
+                    <span class="prefixo-valor">R$</span>
+                    <input type="number" id="valor_meta" name="valor_meta" 
+                           step="0.01" required class="input-padrao"
+                           placeholder="0,00">
+                </div>
+            </div>
+            
+            <div class="grupo-form">
+                <label for="categoria">Categoria (opcional)</label>
+                <select id="categoria" name="categoria" class="input-padrao">
+                    <option value="">selecionar a categoria</option>
+                    {% for categoria in categorias %}
+                    <option value="{{ categoria.id }}">{{ categoria.nome }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            
+            <button type="submit" class="botao-criar">Criar meta</button>
+        </form>
+    </div>
+</div>
+
+<!-- Modal Valor -->
+<div id="modal-valor-meta" class="modal" style="display: none;">
+    <div class="conteudo-modal">
+        <div class="cabecalho-modal">
+            <h2>Adicionar valor à sua meta</h2>
+            <button class="fechar-modal" onclick="fecharModalValorMeta()">X</button>
+        </div>
+        <form id="form-valor-meta">
+            {% csrf_token %}
+            <div class="grupo-form">
+                <label for="valor_meta">Valor a adicionar*</label>
+                <div class="input-valor">
+                    <span class="prefixo-valor">R$</span>
+                    <input type="number" id="input-valor-meta" name="valor_meta" step="0.01" required class="input-padrao" placeholder="0,00">
+                </div>
+            </div>
+            <button type="submit" class="botao-criar">Atualizar Meta</button>
+        </form>
+    </div>
+</div>
+
+<!-- Modal Edição Meta -->
+<div id="modalEditarMeta" class="modal" style="display: none;">
+    <div class="conteudo-modal">
+        <div class="cabecalho-modal">
+            <h2>Editar Meta</h2>
+            <button type="button" class="botao-fechar" onclick="fecharModalEditarMeta()">&times;</button>
+        </div>
+        <form id="form-editar-meta" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="grupo-form">
+                <label for="titulo">Título*</label>
+                <input type="text" id="titulo-editar" name="titulo" required class="input-padrao">
+            </div>
+
+            <div class="grupo-form">
+                <label for="valor_meta">Valor da meta*</label>
+                <div class="input-valor">
+                    <span class="prefixo-valor">R$</span>
+                    <input type="number" id="valor_meta-editar" name="valor_meta" step="0.01" required class="input-padrao">
+                </div>
+            </div>
+
+            <div class="grupo-form">
+                <label for="categoria">Categoria (opcional)</label>
+                <select id="categoria-editar" name="categoria" class="input-padrao">
+                    <option value="">selecionar a categoria</option>
+                    {% for categoria in categorias %}
+                        <option value="{{ categoria.id }}">{{ categoria.nome }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="grupo-form">
+                <label for="imagem">Imagem (opcional)</label>
+                <input type="file" id="imagem-editar" name="imagem" accept="image/*">
+            </div>
+
+            <button type="submit" class="botao-criar">Atualizar Meta</button>
+        </form>
+    </div>
+</div>
+
+{% endblock %}
+
+
+

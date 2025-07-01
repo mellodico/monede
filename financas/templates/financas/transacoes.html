@@ -1,0 +1,209 @@
+{% extends 'financas/base.html' %}
+{% load static %}
+
+{% block extra_css %}
+  <link rel="stylesheet" href="{% static 'financas/css/transacoes.css' %}">
+  <script src="{% static 'js/transacoes.js' %}"></script>
+{% endblock %}
+
+{% block title %}Transações{% endblock %}
+
+{% block content %}
+  <div class="conteudo">
+    <div class="frame-212">
+      <h1 class="nome-pagina">Transações</h1>
+      <button class="botao-add-transacao" onclick="abrirModalNovaTransacao()">
+        <img src="{% static 'icons/addTransação-Vector.svg' %}" class="vector" alt="Ícone">
+        <span class="adicionar-transacao">Adicionar Transação</span>
+      </button>
+    </div>
+
+    <div class="frame-210">
+      <div class="frame-209">
+        <div class="filtros-container">
+          <div class="botao-filtros">
+            <select class="select-filtros" id="timeRange" onchange="updateTimeRange(this.value)">
+              <option value="7">Últimos 7 dias</option>
+              <option value="15">Últimos 15 dias</option>
+              <option value="30">Últimos 30 dias</option>
+            </select>
+          </div>
+        
+        
+          <div class="barra-pesquisa">
+            <input type="text" class="input-pesquisa" id="search-transactions" placeholder="Pesquisar">
+            <img src="{% static 'icons/search-icon.svg' %}" class="vector-pesquisa" alt="Ícone de pesquisa">
+          </div>
+        </div>        
+      </div>
+    </div>
+
+    <div class="tabela-transacoes">
+      <table id="transactions-table">
+        <thead>
+          <tr>
+            <th>Item</th>
+            <th>Data</th>
+            <th>Valor</th>
+            <th>Tipo</th>
+            <th>Banco/Conta</th>
+            <th>Categoria</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for transacao in transacoes %}
+            <tr>
+              <td>
+                <div class="item-container">
+                  <div class="item-icon">
+                    {% if transacao.logo %}
+                       <img src="{{ transacao.logo.imagem.url }}" alt="{{ transacao.titulo }}">
+                      {% else %}
+                          <img src="{% static 'icons/default-icon.svg' %}" alt="Ícone padrão">
+                      {% endif %}
+                  </div>
+                  <span class="item-name">{{ transacao.titulo }}</span>
+                </div>
+              </td>
+              <td>{{ transacao.data }}</td>
+              <td>{{ transacao.valor|floatformat:2 }}</td>
+              <td class="tipo {% if transacao.tipo == 'DESPESA' %}despesa{% else %}receita{% endif %}">{{ transacao.tipo }}</td>
+              <td class="banco">{% if transacao.forma_pagamento %}{% if transacao.forma_pagamento_type.model == 'conta' %}{{ transacao.forma_pagamento.titulo }} <!-- Exibe o título da conta -->{% elif transacao.forma_pagamento_type.model == 'cartao' %}{{ transacao.forma_pagamento.nome_cartao }} <!-- Exibe o nome do cartão -->{% else %}Não definido{% endif %}{% else %}Não especificado{% endif %}</td>
+              <td>
+                <div class="categoria" style="background-color: {{ transacao.categoria.cor|default:'#ccc' }}">
+                  {{ transacao.categoria }}
+              </div>
+              </td>
+              <td class="actions">
+                <div class="dots" onclick="toggleMenu(this)">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+                <div class="menu">
+                    <a href="#" class="editar-transacao">Editar</a>
+                    <a href="#" class="excluir-transacao">Excluir</a>
+                </div>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div id="modalTransacao" class="modal">
+    <div class="conteudo-modal">
+        <div class="cabecalho-modal">
+            <h2>Nova Transação</h2>
+            <button type="button" class="botao-fechar" onclick="fecharModalTransacao()">&times;</button>
+        </div>
+        <form method="post" action="{% url 'nova_transacao' %}" enctype="multipart/form-data">
+            {% csrf_token %}
+            
+            <!-- Campo Título -->
+            <div class="grupo-form">
+                <label for="titulo">Título*</label>
+                <input type="text" id="titulo" name="titulo" required 
+                       placeholder="ex: compra no supermercado" class="input-padrao">
+            </div>
+            
+            <!-- Campo Valor -->
+            <div class="grupo-form">
+                <label for="valor_transacao">Valor da transação*</label>
+                <div class="input-valor">
+                    <span class="prefixo-valor">R$</span>
+                    <input type="number" id="valor_transacao" name="valor" 
+                           step="0.01" required class="input-padrao"
+                           placeholder="0,00">
+                </div>
+            </div>
+            
+            <!-- Campo Data -->
+            <div class="grupo-form">
+                <label for="data_transacao">Data da transação*</label>
+                <div class="input-data">
+                  <input type="date" id="data_transacao" name="data" class="input-padrao" required>
+              </div>
+            </div>
+            
+            <!-- Campo Categoria -->
+            <div class="grupo-form">
+                <label for="categoria">Categoria</label>
+                <select id="categoria" name="categoria" class="input-padrao">
+                    <option value="">Selecionar categoria</option>
+                    {% for categoria in categorias %}
+                    <option value="{{ categoria.id }}">{{ categoria.nome }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <!-- Campo para selecionar tipo de forma de pagamento -->
+            <div class="grupo-form">
+              <label for="forma_pagamento_tipo">Forma de Pagamento</label>
+              <select id="forma_pagamento_tipo" name="forma_pagamento_tipo" class="input-padrao" required>
+                  <option value="">Selecionar tipo</option>
+                  <option value="conta">Conta</option>
+                  <option value="cartao">Cartão</option>
+              </select>
+            </div>
+
+            <!-- Campo para selecionar Conta -->
+            <div class="grupo-form" id="grupo-conta" style="display: none;">
+                <label for="conta">Conta</label>
+                <select id="conta" name="forma_pagamento_conta" class="input-padrao">
+                    <option value="">Selecionar conta</option>
+                    {% for conta in contas %}
+                        <option value="{{ conta.id }}">{{ conta.titulo }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <!-- Campo para selecionar Cartão -->
+            <div class="grupo-form" id="grupo-cartao" style="display: none;">
+                <label for="cartao">Cartão</label>
+                <select id="cartao" name="forma_pagamento_cartao" class="input-padrao">
+                    <option value="">Selecionar cartão</option>
+                    {% for cartao in cartoes %}
+                        <option value="{{ cartao.id }}">{{ cartao.nome_cartao }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <!-- Campo Tipo -->
+            <div class="grupo-form">
+              <label for="tipo">Tipo de Transação*</label>
+              <select id="tipo" name="tipo" class="input-padrao" required>
+                  <option value="RECEITA">Receita</option>
+                  <option value="DESPESA">Despesa</option>
+              </select>
+            </div>
+
+            <!-- Botão Criar -->
+            <button type="submit" class="botao-criar">Criar Transação</button>
+        </form>
+    </div>
+</div>
+
+<script>
+    // Captura do campo de seleção de forma de pagamento
+    const tipoPagamento = document.getElementById('forma_pagamento_tipo');
+    const grupoConta = document.getElementById('grupo-conta');
+    const grupoCartao = document.getElementById('grupo-cartao');
+
+    // Lógica para mostrar/ocultar os campos de conta ou cartão
+    tipoPagamento.addEventListener('change', function() {
+        const tipoSelecionado = tipoPagamento.value;
+        if (tipoSelecionado === 'conta') {
+            grupoConta.style.display = 'block';
+            grupoCartao.style.display = 'none';
+        } else if (tipoSelecionado === 'cartao') {
+            grupoConta.style.display = 'none';
+            grupoCartao.style.display = 'block';
+        } else {
+            grupoConta.style.display = 'none';
+            grupoCartao.style.display = 'none';
+        }
+    });
+</script>
+
+{% endblock %}

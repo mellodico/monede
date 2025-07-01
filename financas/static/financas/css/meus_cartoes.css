@@ -1,0 +1,327 @@
+
+.dashboard-container {
+    max-width: 1150px;
+    margin: auto;
+    padding: 40px 10px;
+    background-color: #F8F8F8;
+}
+
+.content-wrapper {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Section Headers */
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+}
+
+.section-title {
+    font-size: 24px;
+    color: #1A1A1A;
+    margin: 0;
+    font-weight: 600;
+}
+
+.add-button {
+    background-color: #3F9DAC;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    transition: background-color 0.2s;
+}
+
+.add-button:hover {
+    background-color: #358a98;
+}
+
+.add-icon {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+/* Cards Grid */
+.cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+    gap: 24px;
+    margin-bottom: 48px;
+}
+
+/* Credit Card Style */
+.credit-card {
+    width: 450px;
+    height: 180px;
+    background-color: white;
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.card-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.card-logo {
+    width: 48px;
+    height: 48px;
+    position: relative;
+}
+
+.mastercard-circles {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.circle {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.circle-red {
+    background-color: #EB001B;
+    left: 0;
+    z-index: 1;
+}
+
+.circle-orange {
+    background-color: #F79E1B;
+    right: 0;
+    mix-blend-mode: multiply;
+}
+
+.card-info {
+    flex-grow: 1;
+}
+
+.card-name {
+    font-size: 20px;
+    color: #E3484A;
+    margin: 0 0 4px 0;
+    font-weight: 600;
+}
+
+.card-date {
+    font-size: 14px;
+    color: #666;
+    margin: 0;
+}
+
+.card-amount {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 16px;
+}
+
+.amount-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.amount-value {
+    font-size: 24px;
+    color: #1A1A1A;
+    font-weight: 600;
+    margin: 0;
+}
+
+.amount-status {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: #5D9953;
+    font-size: 14px;
+}
+
+.status-dot {
+    width: 6px;
+    height: 6px;
+    background-color: #5D9953;
+    border-radius: 50%;
+}
+
+.view-transactions {
+    padding: 8px 16px;
+    border: 1px solid #E5E5E5;
+    border-radius: 8px;
+    background: none;
+    color: #666;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.2s;
+}
+
+.view-transactions:hover {
+    background-color: #f5f5f5;
+}
+
+/* Bank Account Style */
+.bank-account {
+    background-color: white;
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.bank-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.bank-logo {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.bank-logo img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+.bank-info {
+    flex-grow: 1;
+}
+
+.bank-name {
+    font-size: 18px;
+    color: #1A1A1A;
+    margin: 0 0 4px 0;
+    font-weight: 600;
+}
+
+.bank-balance {
+    color: #666;
+    font-size: 14px;
+    margin: 0 0 4px 0;
+}
+
+.bank-amount {
+    font-size: 20px;
+    color: #1A1A1A;
+    font-weight: 600;
+    margin: 0;
+}
+
+/* Modal Styles */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+}
+
+.modal-content {
+    background-color: white;
+    border-radius: 16px;
+    padding: 24px;
+    width: 90%;
+    max-width: 480px;
+    margin: 10% auto;
+    position: relative;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+}
+
+.modal-header h2 {
+    font-size: 20px;
+    color: #1A1A1A;
+    margin: 0;
+    font-weight: 600;
+}
+
+.close-button {
+    background: none;
+    border: none;
+    font-size: 24px;
+    color: #666;
+    cursor: pointer;
+    padding: 0;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    font-size: 14px;
+    color: #1A1A1A;
+    margin-bottom: 8px;
+}
+
+.form-input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #E5E5E5;
+    border-radius: 8px;
+    font-size: 14px;
+}
+
+.currency-input {
+    display: flex;
+    align-items: center;
+    border: 1px solid #E5E5E5;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.currency-prefix {
+    padding: 12px;
+    background-color: #F8F8F8;
+    color: #666;
+    border-right: 1px solid #E5E5E5;
+}
+
+.currency-input .form-input {
+    border: none;
+    flex: 1;
+}
+
+.modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 24px;
+}
+
+.cancel-button {
+    padding: 12px 24px;
+    background: none;
+    border: 1px solid #E5E5E5;
+    border-radius: 8px;
+    color: #666;
+}

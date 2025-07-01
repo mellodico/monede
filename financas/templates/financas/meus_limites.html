@@ -1,0 +1,88 @@
+{% extends 'financas/base.html' %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'financas/css/limites.css' %}">
+<script src="{% static 'js/limites.js' %}"></script>
+{% endblock %}
+
+{% block title %}Limites{% endblock %}
+
+{% block content %}
+<!-- templates/limits/novo_limite.html -->
+<div class="limit-container">
+    
+    <form method="POST" class="limit-form">
+        {% csrf_token %}
+        
+        <h2>qual é o seu limite?</h2>
+        
+        <div class="form-group">
+            <label>categoria</label>
+            <div class="select-wrapper">
+                <select name="categoria" required id="categoria-select">
+                    <option value="" disabled selected>selecione a categoria</option>
+                    {% for category in categories %}
+                        <option value="{{ category.id }}">
+                            {% if category.icon %}
+                                <i class="{{ category.icon }}"></i>
+                            {% endif %}
+                            {{ category.name }}
+                        </option>
+                    {% endfor %}
+                </select>
+                <i class="fas fa-chevron-right"></i>
+            </div>
+            <button type="button" id="add-category-btn" class="add-category-button">
+                <i class="fas fa-plus"></i> Nova Categoria
+            </button>
+        </div>
+
+        <!-- Rest of the form remains the same -->
+        
+        <div class="form-group">
+            <label>título (opcional)</label>
+            <input type="text" name="titulo" placeholder="ex.: roupas" />
+        </div>
+
+        <div class="form-group">
+            <label>valor do limite</label>
+            <div class="value-input-wrapper">
+                <span class="currency">R$</span>
+                <input type="number" name="valor" id="valor" step="0.01" required />
+            </div>
+            <input type="range" id="valor-slider" min="0" max="10000" step="100" />
+        </div>
+
+        <div class="form-group">
+            <label>recorrência</label>
+            <div class="select-wrapper">
+                <select name="recorrencia" required>
+                    <option value="mensal" selected>mensal</option>
+                    <option value="diario">diário</option>
+                    <option value="semanal">semanal</option>
+                    <option value="anual">anual</option>
+                </select>
+                <i class="fas fa-chevron-right"></i>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>data de início</label>
+            <div class="date-options">
+                <input type="radio" name="data_inicio" id="today" value="today" checked>
+                <label for="today" class="date-option">terça-feira, 29</label>
+
+                <input type="radio" name="data_inicio" id="first-day" value="first-day">
+                <label for="first-day" class="date-option">primeiro dia do mês</label>
+
+                <input type="radio" name="data_inicio" id="last-day" value="last-day">
+                <label for="last-day" class="date-option">último dia do mês</label>
+            </div>
+        </div>
+
+        <button type="submit" class="create-button">criar limite</button>
+    </form>
+</div>
+{% endblock %}
+

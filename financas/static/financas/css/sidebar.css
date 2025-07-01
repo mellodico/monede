@@ -1,0 +1,65 @@
+.sidebar {
+    width: 250px;
+    height: 100vh;
+    padding: 40px 20px 20px;
+    background-color: #F8F8F8;
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.02);
+    
+  }
+  
+  .logo {
+    width: 141.35px;
+    height: 35px;
+  }
+  
+  .logo-img {
+    width: 100%;
+    height: auto;
+  }
+  
+  .nav-links {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    width: 100%;
+  }
+  
+  .nav-item {
+    display: flex;
+    align-items: center;
+    padding: 15px 26px;
+    color: #212121;
+    font-size: 17px;
+    font-family: "Nunito", Arial, sans-serif;
+    font-weight: 700;
+    text-decoration: none;
+    border: 2px solid transparent;
+    transition: border-color 0.3s;
+  }
+  
+  .nav-item:hover {
+    color: #BEBEBE;
+  }
+  
+  .nav-item.active {
+    background-color: #f2f2f2; 
+    color: #212121; 
+  }
+
+
+  .nav-icon {
+    width: 20px; 
+    height: 20px;
+    margin-right: 10px; 
+}
+
+.nav-item:hover .nav-icon {
+  filter: brightness(0) saturate(100%) invert(80%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(92%) contrast(85%);
+}

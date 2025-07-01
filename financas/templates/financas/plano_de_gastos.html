@@ -1,0 +1,99 @@
+{% extends 'financas/base.html' %}
+
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'financas/css/plano_de_gastos.css' %}">
+{% endblock %}
+
+{% block extra_js %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="{% static 'static/js/plano_de_gastos.js' %}"></script>
+<script>
+    // Dados do backend para os gráficos
+    window.categoriaData = {{ categoria_data|safe }};
+    window.despesasData = {{ despesas_data|safe }};
+
+    // Inicializa a classe PlanoGastos
+    const planoGastos = new PlanoGastos();
+    planoGastos.initialize();
+
+    // Limpa os gráficos quando sair da página
+    window.addEventListener('unload', () => {
+        planoGastos.destroy();
+    });
+</script>
+{% endblock %}
+
+{% block title %}Plano de gastos{% endblock %}
+
+{% block content %}
+<div class="plano-gastos">
+    <div class="container">
+        <div class="nome-pagina">
+            <h1>Plano de gastos</h1>
+            <div class="data">{{ mes_atual }}</div>
+        </div>
+
+        <div class="container-grafico-geral">
+            <div class="chart-container">
+                <canvas id="doughnutChart"></canvas>
+            </div>
+
+            <div class="gastos-info">
+                <div class="gastos-header">
+                    <div class="categorias">categorias</div>
+                    <div class="gastos-total">gastos total</div>
+                </div>
+
+                <div class="gastos-list">
+                    {% for categoria in categorias %}
+                    <div class="gasto-item">
+                        <div class="categoria">
+                            <span class="dot" style="background-color: {{ categoria.cor }}"></span>
+                            <span>{{ categoria.nome }}</span>
+                        </div>
+                        <div class="valor">R$ {{ categoria.valor|floatformat:2 }}</div>
+                    </div>
+                    {% endfor %}
+                </div>
+
+                <div class="resumo-gastos">
+                    <div class="resumo-item">
+                        <div class="valor">R$ {{ orcamento_total|floatformat:2 }}</div>
+                        <div class="label">orçamento total</div>
+                    </div>
+                    <div class="resumo-item">
+                        <div class="valor red">R$ {{ gastos_total|floatformat:2 }}</div>
+                        <div class="label">gastos total</div>
+                    </div>
+                    <div class="resumo-item">
+                        <div class="valor green">R$ {{ saldo_restante|floatformat:2 }}</div>
+                        <div class="label">Saldo Restante</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-despesas-planejadas">
+            <div class="titulo">Despesas planejadas</div>
+            <div class="despesas-grid">
+                {% for despesa in despesas_planejadas %}
+                <div class="despesa-item">
+                    <div class="icon {{ despesa.cor }}-bg">
+                        <div class="vector {{ despesa.cor }}-border"></div>
+                    </div>
+                    <div class="info">
+                        <div class="nome">{{ despesa.nome }}</div>
+                        <div class="progresso">
+                            <div class="valor-faltante">R$ {{ despesa.valor_faltante|floatformat:2 }} faltam</div>
+                            <canvas id="barChart{{ despesa.id }}" class="progress-bar-chart"></canvas>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
