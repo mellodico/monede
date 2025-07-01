@@ -1,0 +1,35 @@
+*.svg text eol=lf
+
+
+# Ambiente virtual
+venv/
+ENV/
+env/
+.venv/
+env.bak/
+venv.bak/
+
+# Arquivos de compilação
+__pycache__/
+*.py[cod]
+*$py.class
+
+
+# Diretórios de mídia
+/media/
+/staticfiles/
+
+# Arquivos de configuração sensíveis
+*.env
+
+# IDEs e editores
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+*.log
+
+# Outros arquivos específicos do sistema
+Thumbs.db
+.DS_Store
+*.swp
